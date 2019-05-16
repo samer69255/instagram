@@ -107,7 +107,7 @@ function sleep(ms) {
 function proc(usr, name) {
     return new Promise(async resolve => {
         try {
-            var photo = './photos/'+name;
+            var photo = name;
             await usr.changeProfilePhoto({ photo });
             resolve(true);
         }
