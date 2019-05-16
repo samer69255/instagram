@@ -178,7 +178,7 @@ function save(email) {
                 if (err) throw err;
                 if (data != '') data += '\n';
                 data += email;
-                fs.writeFile('./block.txt', data);
+                fs.writeFileSync('./success.txt', data);
             });
 }
 
