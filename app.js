@@ -26,6 +26,7 @@ const Instagram = require('instagram-web-api');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+var s = {err:0, su:0};
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -56,19 +57,17 @@ async function main() {
        
          var p =  await proc(client, imageList[i]);
         if (p === null) {
-            fs.readFile('./block.txt', 'utf8', function(err, data) {
-                if (err) throw err;
-                if (data != '') data += '\n';
-                data += insx[i];
-                fs.writeFile('./block.txt', data);
-            });
-        console.log('error 1');
+        console.log('error '+(++s.err));
         }
+        else {save(insx[i]);
+              s.su++;
+             }
         console.log('comple '+i); 
         
        await sleep(10);
     }
     console.log('comple full');
+    console.log(s);
 }
 
 function login(user, pass) {
@@ -172,6 +171,15 @@ function search(text) {
             resolve(res);
         });
     });
+}
+
+function save(email) {
+    fs.readFile('./success.txt', 'utf8', function(err, data) {
+                if (err) throw err;
+                if (data != '') data += '\n';
+                data += email;
+                fs.writeFile('./block.txt', data);
+            });
 }
 
 main();
