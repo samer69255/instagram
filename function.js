@@ -2,6 +2,10 @@ var request = require('request');
 imageList = [];
 var stat = {};
 stat.run = false;
+var s = {
+    su:0,
+    err:0
+}
 
 var fs = require('fs');
 const Instagram = require('instagram-web-api');
@@ -119,12 +123,16 @@ function downloadP() {
 };
         
         console.log('downloading Images ...');
-        for (var ii=0; ii<list.length; ii++)
+        for (var ii=0; ii<list.length; ii += 5)
             {
             
+            await download(list[ii].url, './photos/ph_'+ii+'.jpg');
+            await download(list[ii+1].url, './photos/ph_'+ii+'.jpg');
+            await download(list[ii+2].url, './photos/ph_'+ii+'.jpg');
+            await download(list[ii+3].url, './photos/ph_'+ii+'.jpg');
+            await download(list[ii+4].url, './photos/ph_'+ii+'.jpg');
             console.log(ii);
             stat.text = ii.toString();
-            await download(list[ii].url, './photos/ph_'+ii+'.jpg');
             console.log('ccc');
             }
         console.log('dowloand comple');
@@ -150,12 +158,12 @@ function search(text) {
 }
 
 function save(email) {
-    fs.readFile('./public/success.txt', 'utf8', function(err, data) {
+    fs.readFile('./public/data/success.txt', 'utf8', function(err, data) {
                 if (err) throw err;
                 if (data != '') data += '\n';
                 data += email;
-                fs.writeFileSync('./public/success.txt', data);
-                stat.url = './public/success.txt';
+                fs.writeFileSync('./public/data/success.txt', data);
+                stat.url = './data/success.txt';
             });
 }
 
