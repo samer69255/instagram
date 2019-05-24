@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  //body
+  
+  div#main
+    form(name='start', enctype="multipart/form-data", id='f1')
+        div(style='')
+            input(type = 'file', name='l', id='l')
+            textarea(id='ems')
+            hr
+  
+        input(class="btn btn-success first-in-line", type='submit', value="start")
+
+  div#stat
+    div.spinner-grow
+      span.sr-only
+    br
+    span#text working ...
+           
+  //java script
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js')
+  script(src='./javascripts/main.js')

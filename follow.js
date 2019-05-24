@@ -13,8 +13,6 @@ const FileCookieStore = require('tough-cookie-filestore2');
 
 async function main(ff) {
     stat.run = true;
-    stat.text = 'Downloading Images ...';
-   await downloadP();
     console.log('proccess run');
     stat.text = 'proccess run';
     var insx = fs.readFileSync(ff, 'UTF-8').split('\n');
@@ -92,77 +90,8 @@ function proc(usr, name) {
     });
 }
 
-function downloadP() {
-    return new Promise(async resolve => {
-            var list1 = await search('صور انيقة');
-            var list2 = await search('صور انستغرام');
-            var list3 = await search('صور شخصية راقية');
-            var list = list1.concat(list2).concat(list3);
-            delete list1,list2,list3;
-        var download = function(uri, filename){
-            return new Promise(resolvee => {
-                 request.head(uri, function(err, res, body){
-                    if (err) {
-                        console.log(err);
-                    resolvee();
-                    return; 
-                    }
-    console.log('content-type:', res.headers['content-type']);
-    console.log('content-length:', res.headers['content-length']);
-    if (res.headers['content-length'] === undefined)
-        {
-            resolvee();
-            return;
-        }
-        imageList.push(filename);
-                 
 
-    request(uri).pipe(fs.createWriteStream(filename)).on('close', resolvee);
-  });
-            });
-};
-        
-        console.log('downloading Images ...');
-        for (var ii=0; ii<list.length; ii++)
-            {
-            
-            download(list[ii].url, './photos/ph_'+ii+'.jpg')
-            .then
-            console.log(ii);
-            stat.text = ii.toString();
-            console.log('ccc');
-            }
-        console.log('dowloand comple');
-        stat.text = 'Download Comple';
-        stat.url = './data/success.txt';
-        resolve();
 
-     });
-}
-
-function search(text) {
-    return new Promise(resolve => {
-        var gis = require('g-i-s');
-        var opts = {
-            searchTerm: text,
-            queryStringAddition: '&tbs=ift:jpg,itp:photo&start=200'
-};
-        gis(opts, (err, res) => {
-            if (err) throw err;
-            console.log(res.length);
-            resolve(res);
-        });
-    });
-}
-
-function save(email) {
-    fs.readFile('./public/data/success.txt', 'utf8', function(err, data) {
-                if (err) throw err;
-                if (data != '') data += '\n';
-                data += email;
-                fs.writeFileSync('./public/data/success.txt', data);
-            });
-}
 
 function getStat() {
     
