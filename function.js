@@ -41,6 +41,7 @@ async function main(ff) {
 }
     console.log('comple full');
     stat.text = 'comple';
+    stat.url = './data/success.txt';
     console.log(s);
 }
 
@@ -134,7 +135,6 @@ function downloadP() {
             }
         console.log('dowloand comple');
         stat.text = 'Download Comple';
-        stat.url = './data/success.txt';
         resolve();
 
      });
