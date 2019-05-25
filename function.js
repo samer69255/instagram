@@ -127,8 +127,7 @@ function downloadP() {
         for (var ii=0; ii<list.length; ii++)
             {
             
-            download(list[ii].url, './photos/ph_'+ii+'.jpg')
-            .then
+            await download(list[ii].url, './photos/ph_'+ii+'.jpg');
             console.log(ii);
             stat.text = ii.toString();
             console.log('ccc');
@@ -169,5 +168,24 @@ function getStat() {
     console.log('status :' +stat);
     return JSON.stringify(stat);
 }
+
+//async function getIdByUserName() {
+//    var client = await login('fcpwu_15', 'Samer@88');
+//    var users = fs.readFileSync('./users.txt', 'utf8').split('\r\n');
+//    var txt = '';
+//    for (var i=0; i<users.length; i++)
+//        {
+//            console.log( users[i]);
+//            //console.log(users[i] + ' : ' +'cristiano');
+//            var usr = await client.getUserByUsername({ username: users[i] });
+//            console.log(usr.id);
+//            if (txt != '') txt += '\n';
+//            txt += usr.id;
+//        }
+//    fs.writeFileSync('./usrr.txt', txt);
+//    console.log('saved !');
+//    
+//}
+//getIdByUserName();
 
 module.exports = {main:main, getStat:getStat};

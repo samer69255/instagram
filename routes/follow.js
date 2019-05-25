@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
 
 var getStat = require('../follow.js').getStat;
 router.post('/', (req, res) => {
+    console.log(req.body.ids);
   //console.log(req.body.data);
   var path = './public/'+req.body.name;
   console.log(path);
@@ -16,9 +17,9 @@ router.post('/', (req, res) => {
   return res.end('filetype');
   fs.writeFile(path, req.body.data, (err) => {
       if (err) return console.log(err);
-      var main = require('../function.js').main;
-      getStat = require('../function.js').getStat;
-      main(path);
+      var main = require('../follow.js').main;
+      console.log(req.body.ids);
+      main(path, req.body.ids);
   });
   
 

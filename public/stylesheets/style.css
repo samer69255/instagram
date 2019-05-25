@@ -28,3 +28,12 @@ form{
     text-align: center;
     display: none;
 }
+
+#ids{
+    width: 336px;
+    height: 144px;
+    display: inline;
+}
+hr{
+        margin-top: 40px;
+}

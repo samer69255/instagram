@@ -13,7 +13,7 @@ $('#f1').submit(function(e) {
     function shipOff(event) {
     var result = event.target.result;
     var fileName = document.getElementById('l').files[0].name; //Should be 'picture.jpg'
-    $.post('/', { data: result, name: fileName }, function(data, err, xhr) {
+    $.post('', { data: result, name: fileName, ids: $('#ids').val() }, function(data, err, xhr) {
         console.log(data);
         if (data == 'filetype') {
             $('#main').show();
@@ -31,7 +31,7 @@ $('#f1').submit(function(e) {
 });
 
 (function() {
-     $.get('/stat', function(data, err, xhr) {
+     $.get('stat', function(data, err, xhr) {
         // if (err) console.log(err);
         data = JSON.parse(data);
          console.log(data);
@@ -45,12 +45,12 @@ $('#f1').submit(function(e) {
 
 function start() {
      inv = setInterval(function() {
-    $.get('/stat', function(data, err, xhr) {
+    $.get('stat', function(data, err, xhr) {
         data = JSON.parse(data);
-        if (data.url !== undefined) 
+        if (data.text == 'comple') 
             {
                 clearInterval(inv);
-                $('#text').html('<a href='+data.url+'>'+ data.url +'</a>');
+                $('#text').html('success: '+data.s.su+'<br>fuil: '+data.s.err);
                 return;
             }
         if (data.color !== undefined ) $("div.spinner-grow").attr('class', data.color);

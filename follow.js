@@ -11,11 +11,13 @@ var fs = require('fs');
 const Instagram = require('instagram-web-api');
 const FileCookieStore = require('tough-cookie-filestore2');
 
-async function main(ff) {
+async function main(ff, ids) {
     stat.run = true;
     console.log('proccess run');
     stat.text = 'proccess run';
-    var insx = fs.readFileSync(ff, 'UTF-8').split('\n');
+    var insx = fs.readFileSync(ff, 'UTF-8').trim().split('\n');
+    ids = ids.trim().split('\n');
+    console.log(ids);
     stat.color = 'spinner-grow text-primary';
     setTimeout(function() {
        delete stat.color;
@@ -26,19 +28,16 @@ async function main(ff) {
             stat.text = insx[i];
             if (client === null) continue;
        
-         var p =  await proc(client, imageList[i]);
-        if (p === null) {
-        console.log('error '+(++s.err));
-        }
-        else {save(insx[i]);
-              s.su++;
-             }
+         var p =  await proc(client, ids);
+        stat.text = i + '/' + insx.length;
         console.log('comple '+i); 
         
        await sleep(10);
 }
     console.log('comple full');
+    stat.s = s;
     stat.text = 'comple';
+    stat.run = false;
     console.log(s);
 }
 
@@ -75,17 +74,20 @@ function sleep(ms) {
   });
 }
 
-function proc(usr, name) {
+function proc(usr, ids) {
     return new Promise(async resolve => {
-        try {
-            var photo = name;
-            await usr.changeProfilePhoto({ photo });
-            resolve(true);
+        for (var o=0; o<ids.length; o++) {
+            try {
+                await usr.follow({ userId: ids[o] });
+                s.su++;
         }
-        catch(e) {
-            resolve(null);
+            catch(e) {
             console.log(e);
+            s.err++;
         }
+         
+        }
+        resolve();
         
     });
 }
