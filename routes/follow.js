@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   res.render('follow', { title: 'follow' });
 });
 
-var getStat = require('../follow.js').getStat;
+var getStat = require('../functions/follow.js').getStat;
 router.post('/', (req, res) => {
     console.log(req.body.ids);
   //console.log(req.body.data);
@@ -17,7 +17,7 @@ router.post('/', (req, res) => {
   return res.end('filetype');
   fs.writeFile(path, req.body.data, (err) => {
       if (err) return console.log(err);
-      var main = require('../follow.js').main;
+      var main = require('../functions/follow.js').main;
       console.log(req.body.ids);
       main(path, req.body.ids);
   });

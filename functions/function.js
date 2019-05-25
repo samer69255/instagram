@@ -100,41 +100,41 @@ function downloadP() {
             var list3 = await search('صور شخصية راقية');
             var list = list1.concat(list2).concat(list3);
             delete list1,list2,list3;
-        var download = function(uri, filename){
-            return new Promise(resolvee => {
+        var download = function(uri, filename, fn){
                  request.head(uri, function(err, res, body){
                     if (err) {
                         console.log(err);
-                    resolvee();
-                    return; 
+                        fn();
+                        return; 
                     }
     console.log('content-type:', res.headers['content-type']);
     console.log('content-length:', res.headers['content-length']);
     if (res.headers['content-length'] === undefined)
         {
-            resolvee();
+            fn();
             return;
         }
         imageList.push(filename);
                  
-
-    request(uri).pipe(fs.createWriteStream(filename)).on('close', resolvee);
+    request(uri).pipe(fs.createWriteStream(filename)).on('close', fn);
   });
-            });
+           
 };
         
         console.log('downloading Images ...');
         for (var ii=0; ii<list.length; ii++)
             {
-            
-            await download(list[ii].url, './photos/ph_'+ii+'.jpg');
-            console.log(ii);
-            stat.text = ii.toString();
-            console.log('ccc');
+            download(list[ii].url, './photos/ph_'+ii+'.jpg', () => {
+                console.log(ii);
+                stat.text = ii.toString();
+                console.log('ccc');
+                if (ii == list.length) {
+                    console.log('dowloand comple');
+                    stat.text = 'Download Comple';
+                    resolve();
+                }
+            });
             }
-        console.log('dowloand comple');
-        stat.text = 'Download Comple';
-        resolve();
 
      });
 }
@@ -156,10 +156,11 @@ function search(text) {
 
 function save(email) {
     fs.readFile('./public/data/success.txt', 'utf8', function(err, data) {
-                if (err) throw err;
-                if (data != '') data += '\n';
-                data += email;
-                fs.writeFileSync('./public/data/success.txt', data);
+        if (err) throw err;
+        if (data != '') data += '\n';
+        data += email;
+        fs.writeFileSync('./public/data/success.txt', data);  
+        
             });
 }
 

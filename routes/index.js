@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-var getStat = require('../function.js').getStat;
+var getStat = require('../functions/function.js').getStat;
 router.post('/', (req, res) => {
   //console.log(req.body.data);
   var path = './public/'+req.body.name;
@@ -16,8 +16,7 @@ router.post('/', (req, res) => {
   return res.end('filetype');
   fs.writeFile(path, req.body.data, (err) => {
       if (err) return console.log(err);
-      var main = require('../function.js').main;
-      getStat = require('../function.js').getStat;
+      var main = require('../functions/function.js').main;
       main(path);
   });
   
