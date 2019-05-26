@@ -177,8 +177,9 @@ function downloadP() {
         console.log('downloading Images ...');
         for (var ii=0; ii<list.length; ii++)
             {
+            console.log('I: ' +ii);
             download(list[ii].url, './photos/ph_'+ii+'.jpg', () => {
-                console.log(ii);
+                console.log('II: ' +ii);
                 stat.text = ii.toString();
                 console.log('ccc');
                 if (ii == list.length) {
