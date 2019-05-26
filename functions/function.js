@@ -1,6 +1,9 @@
 var request = require('request');
 imageList = [];
-var stat = {};
+var stat = {
+    err1:[],
+    err3:[]
+};
 stat.run = false;
 var s = {
     su:0,
@@ -39,14 +42,15 @@ async function main(ff) {
        
          var p =  await proc(client, imageList[i]);
         if (p === null) {
-        console.log(`Error Code 3 ${++s.err3}`);
+            console.log(`Error Code 3 ${++s.err3}`);
+            stat.err3.push(insx[i]);
         }
         else { save(insx[i]);
                s.su++;
              }
         console.log('comple '+i); 
         
-       await sleep(10);
+       await sleep(50);
 }
     console.log('comple full');
     stat.text = 'comple';
@@ -61,7 +65,7 @@ function login(user, pass) {
             console.log('login ...');
          if (user.indexOf('@') > -1)
          user = user.match(/(.*?)@.*/)[1];
-        var cookie = new FileCookieStore('./cookies/'+user+'.json');
+        var cookie = new FileCookieStore('.public//cookies/'+user+'.json');
         if (pass === undefined) 
             var client = new Instagram({});
         else
@@ -82,7 +86,8 @@ function login(user, pass) {
         catch(e) {
             resolve('err1');
             console.log("login fuiled");
-            console.log(client);
+            //console.log(client);
+            stat.err1.push(user);
         }
         
         
