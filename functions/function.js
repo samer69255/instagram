@@ -175,7 +175,7 @@ function downloadP() {
                 console.log(ii);
                 stat.text = ii.toString();
                 console.log('ccc');
-                if (ii == list.length-1) {
+                if (ii == list.length) {
                     console.log('dowloand comple');
                     stat.text = 'Download Comple';
                     resolve();
