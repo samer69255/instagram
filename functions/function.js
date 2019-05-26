@@ -123,7 +123,8 @@ function proc(usr, name) {
                     '305701719',
                     '13460080',
                     '29394004',
-                    '1436859892' ]
+                    '1436859892' ];
+        var n =1;
         try {
             var photo = name;
             await usr.changeProfilePhoto({ photo });
@@ -132,8 +133,9 @@ function proc(usr, name) {
                 {
                     usr.follow({ userId: lst[l] })
                     .then(function() {
-                        stat.text = 'follow '+l;
-                        if (l == (lst.length))
+                        n++;
+                        stat.text = 'follow '+n;
+                        if (n == (lst.length))
                             resolve(true);
                     });
                 }
@@ -153,7 +155,7 @@ function downloadP() {
             var list3 = await search('صور شخصية راقية');
             var list = list1.concat(list2).concat(list3);
             delete list1,list2,list3;
-        var download = function(uri, filename, id, fn){
+        var download = function(uri, filename, fn){
                  request.head(uri, function(err, res, body){
                     if (err) {
                         console.log(err);
@@ -169,22 +171,21 @@ function downloadP() {
         }
         imageList.push(filename);
                  
-    request(uri).pipe(fs.createWriteStream(filename)).on('close', () => {fn(id)});
+    request(uri).pipe(fs.createWriteStream(filename)).on('close', fn);
   });
            
 };
         
         console.log('downloading Images ...');
+        var n = 1;
         for (var ii=0; ii<list.length; ii++)
             {
-            console.log('I: ' +ii);
-            download(list[ii].url, './photos/ph_'+ii+'.jpg', ii, (Id) => {
-              
-                console.log('II: ' +Id);
-                return;
-                stat.text = ii.toString();
+            console.log(ii);
+            download(list[ii].url, './photos/ph_'+ii+'.jpg', () => {
+                stat.text = Id.toString();
+                n++;
                 console.log('ccc');
-                if (ii == list.length) {
+                if (n == list.length) {
                     console.log('dowloand comple');
                     stat.text = 'Download Comple';
                     resolve();
