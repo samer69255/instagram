@@ -50,9 +50,12 @@ function start() {
         if (data.url2 !== undefined) 
             {
                 clearInterval(inv);
-                var html = '<a href='+data.url1+'>success'+ data.url +'</a>';
-                html += '<br><a href='+data.url2+'>Cookies'+ data.url +'</a>'
+                var html = '<a href='+data.url1+'>success'+'</a>';
+                html += '<br><a href='+data.url2+'>Cookies'+'</a>';
                 $('#text').html(html);
+                if (data.err1) alert(data.err1.join('\n'));
+                if (data.err2) alert(data.err2.join('\n'));
+                
                 return;
             }
         if (data.color !== undefined ) $("div.spinner-grow").attr('class', data.color);
