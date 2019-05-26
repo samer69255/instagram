@@ -28,6 +28,7 @@ async function main(ff) {
         
             stat.text = `Loging to ${insx[i]}`;
             var client = await login(insx[i], "Samer@88");
+            console.log('Logined');
             stat.text = `Logined to ${insx[i]}`;
             if (client === 'err1') {
                 console.log(`Error Code 1 ${++s.err1}`);
@@ -159,8 +160,8 @@ function downloadP() {
                         fn();
                         return; 
                     }
-    console.log('content-type:', res.headers['content-type']);
-    console.log('content-length:', res.headers['content-length']);
+    //console.log('content-type:', res.headers['content-type']);
+    //console.log('content-length:', res.headers['content-length']);
     if (res.headers['content-length'] === undefined)
         {
             fn();
@@ -181,7 +182,7 @@ function downloadP() {
             download(list[ii].url, './photos/ph_'+ii+'.jpg', () => {
                 stat.text = n.toString();
                 n++;
-                console.log('ccc');
+                //console.log('ccc');
                 if (n == list.length) {
                     console.log('dowloand comple');
                     stat.text = 'Download Comple';
