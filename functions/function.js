@@ -182,7 +182,7 @@ function downloadP() {
             {
             console.log(ii);
             download(list[ii].url, './photos/ph_'+ii+'.jpg', () => {
-                stat.text = Id.toString();
+                stat.text = n.toString();
                 n++;
                 console.log('ccc');
                 if (n == list.length) {

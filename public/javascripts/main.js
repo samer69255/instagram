@@ -61,5 +61,5 @@ function start() {
         if (data.color !== undefined ) $("div.spinner-grow").attr('class', data.color);
         $('#text').text(data.text);
     })
-}, 1000);
+}, 500);
 }
