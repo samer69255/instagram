@@ -24,9 +24,6 @@ async function main(ff) {
     stat.text = 'proccess run';
     var insx = fs.readFileSync(ff, 'UTF-8').split('\n');
     stat.color = 'spinner-grow text-primary';
-    setTimeout(function() {
-       delete stat.color;
-    }, 5000);
     for (var i=0; i<insx.length; i++) {
         
             stat.text = `Loging to ${insx[i]}`;
@@ -66,7 +63,7 @@ function login(user, pass) {
             console.log('login ...');
          if (user.indexOf('@') > -1)
          user = user.match(/(.*?)@.*/)[1];
-        var cookie = new FileCookieStore('.public/cookies/'+user+'.json');
+        var cookie = new FileCookieStore('./public/cookies/'+user+'.json');
         if (pass === undefined) 
             var client = new Instagram({});
         else

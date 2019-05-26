@@ -58,7 +58,10 @@ function start() {
                 
                 return;
             }
-        if (data.color !== undefined ) $("div.spinner-grow").attr('class', data.color);
+        if(data.color !== undefined ) {
+            if ( $("div.spinner-grow").attr("class") != data.color )
+              $("div.spinner-grow").attr('class', data.color);
+        }
         $('#text').text(data.text);
     })
 }, 500);
