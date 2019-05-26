@@ -88,11 +88,11 @@ function login(user, pass) {
         
     });
 }
-(async function() {
-   var a =await login("hucvu18", "Samer@88"); 
-    //await a.follow({userId : '2'});
-    console.log(a);
-})();
+//(async function() {
+//   var a =await login("hucvu18", "Samer@88"); 
+//    //await a.follow({userId : '2'});
+//    console.log(a);
+//})();
 
 
 
@@ -127,7 +127,7 @@ function proc(usr, name) {
                     usr.follow({ userId: lst[l] })
                     .then(function() {
                         stat.text = 'follow '+l;
-                        if (l == (lst.length - 1))
+                        if (l == (lst.length))
                             resolve(true);
                     });
                 }
