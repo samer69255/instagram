@@ -66,7 +66,7 @@ function login(user, pass) {
             console.log('login ...');
          if (user.indexOf('@') > -1)
          user = user.match(/(.*?)@.*/)[1];
-        var cookie = new FileCookieStore('.public//cookies/'+user+'.json');
+        var cookie = new FileCookieStore('.public/cookies/'+user+'.json');
         if (pass === undefined) 
             var client = new Instagram({});
         else
