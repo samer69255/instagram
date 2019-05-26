@@ -136,6 +136,7 @@ function proc(usr, name) {
                         if (n == (lst.length))
                             resolve(true);
                     });
+                    await sleep(10);
                 }
         }
         catch(e) {
