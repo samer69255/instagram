@@ -179,10 +179,9 @@ function downloadP() {
             {
             console.log('I: ' +ii);
             download(list[ii].url, './photos/ph_'+ii+'.jpg', ii, (Id) => {
-                console.log('er: '+er);
-                console.log('data: '+data);
-                return;
+              
                 console.log('II: ' +Id);
+                return;
                 stat.text = ii.toString();
                 console.log('ccc');
                 if (ii == list.length) {
