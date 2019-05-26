@@ -47,10 +47,12 @@ function start() {
      inv = setInterval(function() {
     $.get('/stat', function(data, err, xhr) {
         data = JSON.parse(data);
-        if (data.url !== undefined) 
+        if (data.url2 !== undefined) 
             {
                 clearInterval(inv);
-                $('#text').html('<a href='+data.url+'>'+ data.url +'</a>');
+                var html = '<a href='+data.url1+'>success'+ data.url +'</a>';
+                html += '<br><a href='+data.url2+'>Cookies'+ data.url +'</a>'
+                $('#text').html(html);
                 return;
             }
         if (data.color !== undefined ) $("div.spinner-grow").attr('class', data.color);

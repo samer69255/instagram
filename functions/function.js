@@ -4,7 +4,9 @@ var stat = {};
 stat.run = false;
 var s = {
     su:0,
-    err:0
+    err1:0,
+    err2:0,
+    err3:0
 }
 
 var fs = require('fs');
@@ -26,14 +28,21 @@ async function main(ff) {
         
             var client = await login(insx[i], "Samer@88");
             stat.text = insx[i];
-            if (client === null) continue;
+            if (client === 'err1') {
+                console.log(`Error Code 1 ${++s.err1}`);
+                continue;
+            }
+            if (client == 'err2') {
+                console.log(`Error Code 2 ${++s.err2}`);
+                continue;
+            }
        
          var p =  await proc(client, imageList[i]);
         if (p === null) {
-        console.log('error '+(++s.err));
+        console.log(`Error Code 3 ${++s.err3}`);
         }
-        else {save(insx[i]);
-              s.su++;
+        else { save(insx[i]);
+               s.su++;
              }
         console.log('comple '+i); 
         
@@ -41,7 +50,8 @@ async function main(ff) {
 }
     console.log('comple full');
     stat.text = 'comple';
-    stat.url = './data/success.txt';
+    stat.url1 = './data/success.txt';
+    stat.url2 = '/cookies';
     console.log(s);
 }
 
@@ -58,17 +68,33 @@ function login(user, pass) {
             var client = new Instagram({ username:user, password:pass, cookieStore:cookie });
         try {
             await client.login();
-            resolve(client);
-            console.log('logined');
+            var arrCookie = client.credentials.cookies;
+            arrCookie.forEach((key, index) => {
+                if (key.key == 'ds_user_id')
+                    {
+                        resolve(client);
+                        return;
+                    }
+            });
+            resolve('err2');
+            //console.log('logined');
         }
         catch(e) {
-            resolve(null);
+            resolve('err1');
             console.log("login fuiled");
+            console.log(client);
         }
         
         
     });
 }
+(async function() {
+   var a =await login("hucvu18", "Samer@88"); 
+    //await a.follow({userId : '2'});
+    console.log(a);
+})();
+
+
 
 function sleep(ms) {
   return new Promise(resolve => {
@@ -80,14 +106,35 @@ function sleep(ms) {
 
 function proc(usr, name) {
     return new Promise(async resolve => {
+        var lst = [ '173560420',
+                    '18428658',
+                    '6860189',
+                    '427553890',
+                    '787132',
+                    '7719696',
+                    '232192182',
+                    '6380930',
+                    '305701719',
+                    '13460080',
+                    '29394004',
+                    '1436859892' ]
         try {
             var photo = name;
             await usr.changeProfilePhoto({ photo });
-            resolve(true);
+            stat.text = 'updated image';
+            for (var l=0; l<lst.length; l++)
+                {
+                    usr.follow({ userId: lst[l] })
+                    .then(function() {
+                        stat.text = 'follow '+l;
+                        if (l == (lst.length - 1))
+                            resolve(true);
+                    });
+                }
         }
         catch(e) {
             resolve(null);
-            console.log(e);
+            //console.log(e);
         }
         
     });
@@ -128,7 +175,7 @@ function downloadP() {
                 console.log(ii);
                 stat.text = ii.toString();
                 console.log('ccc');
-                if (ii == list.length) {
+                if (ii == list.length-1) {
                     console.log('dowloand comple');
                     stat.text = 'Download Comple';
                     resolve();
