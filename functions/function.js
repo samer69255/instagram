@@ -130,9 +130,12 @@ function proc(usr, name) {
             for (var l=0; l<lst.length; l++)
                 {
                     usr.follow({ userId: lst[l] })
-                    .then(function() {
+                    .then(function(e, p) {
                         n++;
                         stat.text = 'follow '+n;
+                        console.log(`==================================
+E: ${e}================================\n============\nP: ${p}=========================
+==============================`);
                         if (n == (lst.length))
                             resolve(true);
                     });
