@@ -85,10 +85,10 @@ function login(user, pass) {
             //console.log('logined');
         }
         catch(e) {
-            resolve('err1');
-            console.log("login fuiled");
-            //console.log(client);
             stat.err1.push(user);
+            console.log("login fuiled");
+            resolve('err1');
+            //console.log(client);
         }
         
         
