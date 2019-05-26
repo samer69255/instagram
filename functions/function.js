@@ -178,7 +178,10 @@ function downloadP() {
         for (var ii=0; ii<list.length; ii++)
             {
             console.log('I: ' +ii);
-            download(list[ii].url, './photos/ph_'+ii+'.jpg', () => {
+            download(list[ii].url, './photos/ph_'+ii+'.jpg', (er, data) => {
+                console.log('er: '+er);
+                console.log('data: '+data);
+                return;
                 console.log('II: ' +ii);
                 stat.text = ii.toString();
                 console.log('ccc');
