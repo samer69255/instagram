@@ -153,7 +153,7 @@ function downloadP() {
             var list3 = await search('صور شخصية راقية');
             var list = list1.concat(list2).concat(list3);
             delete list1,list2,list3;
-        var download = function(uri, filename, fn){
+        var download = function(uri, filename, id, fn){
                  request.head(uri, function(err, res, body){
                     if (err) {
                         console.log(err);
@@ -169,7 +169,7 @@ function downloadP() {
         }
         imageList.push(filename);
                  
-    request(uri).pipe(fs.createWriteStream(filename)).on('close', fn);
+    request(uri).pipe(fs.createWriteStream(filename)).on('close', () => {fn(id)});
   });
            
 };
@@ -178,11 +178,11 @@ function downloadP() {
         for (var ii=0; ii<list.length; ii++)
             {
             console.log('I: ' +ii);
-            download(list[ii].url, './photos/ph_'+ii+'.jpg', (er, data) => {
+            download(list[ii].url, './photos/ph_'+ii+'.jpg', ii, (Id) => {
                 console.log('er: '+er);
                 console.log('data: '+data);
                 return;
-                console.log('II: ' +ii);
+                console.log('II: ' +Id);
                 stat.text = ii.toString();
                 console.log('ccc');
                 if (ii == list.length) {
