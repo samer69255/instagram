@@ -29,8 +29,9 @@ async function main(ff) {
     }, 5000);
     for (var i=0; i<insx.length; i++) {
         
+            stat.text = `Loging to ${insx[i]}`;
             var client = await login(insx[i], "Samer@88");
-            stat.text = insx[i];
+            stat.text = `Logined to ${insx[i]}`;
             if (client === 'err1') {
                 console.log(`Error Code 1 ${++s.err1}`);
                 continue;
