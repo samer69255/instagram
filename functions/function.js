@@ -74,33 +74,24 @@ function login(user, pass) {
         try {
             await client.login();
             var ck = false;
-            var arrCookie = client.credentials.cookies;
-            for (var c=0; c<arrCookie.length; c++) {
-                if (arrCookie[c] == 'ds_user_id') {
-                    ck = true;
-                    break;
-                }
-            }
-            if (ch)
+            var arrCookie = JSON.stringify(client.credentials.cookies);
+            if( (arrCookie.indexOf('"key":"ds_user_id"')) > -1)
                 resolve(client);
             else
                 resolve('err2');
-            //console.log('logined');
         }
         catch(e) {
             stat.err1.push(user);
             console.log("login fuiled");
             resolve('err1');
             //console.log(client);
-        }
-        
-        
+    }
     });
 }
 //(async function() {
-//   var a =await login("hucvu18", "Samer@88"); 
+//   var a =await login("samawisamer", "Samer@991"); 
 //    //await a.follow({userId : '2'});
-//    console.log(a);
+//    console.log(  a);
 //})();
 
 
