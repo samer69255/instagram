@@ -19,7 +19,7 @@ const FileCookieStore = require('tough-cookie-filestore2');
 async function main(ff) {
     stat.run = true;
     stat.text = 'Downloading Images ...';
-   await downloadP();
+    await downloadP();
     console.log('proccess run');
     stat.text = 'proccess run';
     var insx = fs.readFileSync(ff, 'UTF-8').split('\n');
@@ -32,10 +32,12 @@ async function main(ff) {
             stat.text = `Logined to ${insx[i]}`;
             if (client === 'err1') {
                 console.log(`Error Code 1 ${++s.err1}`);
+                stat.text = insx[i] + '=> Error 1';
                 continue;
             }
             if (client == 'err2') {
                 console.log(`Error Code 2 ${++s.err2}`);
+                stat.text = insx[i] + '=> Error 2';
                 continue;
             }
        
@@ -61,9 +63,9 @@ async function main(ff) {
 function login(user, pass) {
     return new Promise(async resolve => {
         
-            console.log('login ...');
-         if (user.indexOf('@') > -1)
-         user = user.match(/(.*?)@.*/)[1];
+        console.log('login ...');
+        if (user.indexOf('@') > -1)
+        user = user.match(/(.*?)@.*/)[1];
         var cookie = new FileCookieStore('./public/cookies/'+user+'.json');
         if (pass === undefined) 
             var client = new Instagram({});
@@ -71,15 +73,18 @@ function login(user, pass) {
             var client = new Instagram({ username:user, password:pass, cookieStore:cookie });
         try {
             await client.login();
+            var ck = false;
             var arrCookie = client.credentials.cookies;
-            arrCookie.forEach((key, index) => {
-                if (key.key == 'ds_user_id')
-                    {
-                        resolve(client);
-                        return;
-                    }
-            });
-            resolve('err2');
+            for (var c=0; c<arrCookie.length; c++) {
+                if (arrCookie[c] == 'ds_user_id') {
+                    ck = true;
+                    break;
+                }
+            }
+            if (ch)
+                resolve(client);
+            else
+                resolve('err2');
             //console.log('logined');
         }
         catch(e) {
