@@ -17,7 +17,7 @@ router.post('/', (req, res) => {
   fs.writeFile(path, req.body.data, (err) => {
       if (err) return console.log(err);
       var main = require('../functions/function.js').main;
-      main(path);
+      main(path).catch(e => {throw e});
   });
   
 
