@@ -21,7 +21,10 @@ form{
 
 #text{
     color: green;
-    background-color: #000000
+    background-color: #000000;
+    height: 322px;
+    width: 650px;
+    resize: inherit;
 }
 
 #stat{

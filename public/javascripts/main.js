@@ -1,8 +1,11 @@
+$('#main').hide();
+$('#stat').show();
 $('#f1').submit(function(e) {
     e.preventDefault();
     
     $('#main').hide();
     $('#stat').show();
+    log('Working ...');
     
     //var data = $(this).serialize();
     (function() {
@@ -62,7 +65,15 @@ function start() {
             if ( $("div.spinner-grow").attr("class") != data.color )
               $("div.spinner-grow").attr('class', data.color);
         }
-        $('#text').text(data.text);
+        log(data.text);
     })
-}, 500);
+}, 100);
+}
+
+var lastLog = '';
+function log(txt) {
+    if (txt != lastLog) {
+        lastLog = txt;
+        $('#text')[0].value += txt + '\n';
+    }
 }
