@@ -1,5 +1,5 @@
-$('#main').hide();
-$('#stat').show();
+//$('#main').hide();
+//$('#stat').show();
 $('#f1').submit(function(e) {
     e.preventDefault();
     
@@ -48,25 +48,25 @@ $('#f1').submit(function(e) {
 
 function start() {
      inv = setInterval(function() {
-    $.get('/stat', function(data, err, xhr) {
-        data = JSON.parse(data);
-        if (data.url2 !== undefined) 
-            {
-                clearInterval(inv);
-                var html = '<a href='+data.url1+'>success'+'</a>';
-                html += '<br><a href='+data.url2+'>Cookies'+'</a>';
-                $('#text').html(html);
-                if (data.err1) alert(data.err1.join('\n'));
-                if (data.err2) alert(data.err2.join('\n'));
+        $.get('/stat', function(data, err, xhr) {
+            data = JSON.parse(data);
+            if (data.url2 !== undefined) 
+                {
+                    clearInterval(inv);
+                    var html = '<a href='+data.url1+'>success'+'</a>';
+                    html += '<br><a href='+data.url2+'>Cookies'+'</a>';
+                    $('#text').html(html);
+                    if (data.err1) alert(data.err1.join('\n'));
+                    if (data.err2) alert(data.err2.join('\n'));
                 
-                return;
-            }
-        if(data.color !== undefined ) {
-            if ( $("div.spinner-grow").attr("class") != data.color )
-              $("div.spinner-grow").attr('class', data.color);
+                    return;
+                }
+            if(data.color !== undefined ) {
+                if ( $("div.spinner-grow").attr("class") != data.color )
+                $("div.spinner-grow").attr('class', data.color);
         }
         log(data.text);
-    })
+    });
 }, 100);
 }
 
