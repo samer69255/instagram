@@ -122,7 +122,7 @@ function proc(usr, name) {
                     '13460080',
                     '29394004',
                     '1436859892' ];
-        var n =1;
+        var n =0;
         try {
             var photo = name;
             await usr.changeProfilePhoto({ photo });
@@ -130,12 +130,8 @@ function proc(usr, name) {
             for (var l=0; l<lst.length; l++)
                 {
                     usr.follow({ userId: lst[l] })
-                    .then(function(e, p) {
-                        n++;
-                        stat.text = 'follow '+n;
-                        console.log(`==================================
-E: ${JSON.stringify(e, null, 4)}================================\n==========================
-====`);
+                    .then(function() {
+                        stat.text = 'follow '+( ++n );
                         if (n == (lst.length))
                             resolve(true);
                     });
@@ -171,21 +167,19 @@ function downloadP() {
             fn();
             return;
         }
-        imageList.push(filename);
-                 
-    request(uri).pipe(fs.createWriteStream(filename)).on('close', fn);
+        imageList.push(filename);      
+        request(uri).pipe(fs.createWriteStream(filename)).on('close', fn);
   });
            
 };
         
         console.log('downloading Images ...');
-        var n = 1;
+        var n = 0;
         for (var ii=0; ii<list.length; ii++)
             {
-            console.log(ii);
+            //console.log(ii);
             download(list[ii].url, './photos/ph_'+ii+'.jpg', () => {
-                stat.text = n.toString();
-                n++;
+                stat.text = ( ++n ).toString();
                 //console.log('ccc');
                 if (n == list.length) {
                     console.log('dowloand comple');
