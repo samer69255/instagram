@@ -139,12 +139,18 @@ function proc(usr, name) {
             console.log('Updated ProfilePhoto');
             stat.text = 'updated image';
             for (var l=0; l<lst.length; l++)
-                {
-                   await usr.follow({ userId: lst[l] });
-                   console.log('followed => '+l);
-                   if (++n == lst.length)
-                       resolve(true);
+            {
+                try {
+                    await usr.follow({ userId: lst[l] });
+                    console.log('followed => '+l);
+                    if (++n == lst.length)
+                    resolve(true);
                 }
+                catch(e) {
+                    throw e;
+                }
+                
+            }
         }
         catch(e) {
             resolve(null);
