@@ -186,7 +186,7 @@ function downloadP() {
         for (var ii=0; ii<list.length; ii++)
             {
                 //console.log(ii);
-                download((list[ii].url), `./photos/ph_${ii}.jpg`, () => {
+                download(decodeURI(list[ii].url), `./photos/ph_${ii}.jpg`, () => {
                 stat.text = ( ++n ).toString();
                 //console.log('ccc');
                 if (n == list.length) {
