@@ -141,7 +141,9 @@ function proc(usr, name) {
             for (var l=0; l<lst.length; l++)
                 {
                    await usr.follow({ userId: lst[l] });
-                   console.log('followed => '+l)
+                   console.log('followed => '+l);
+                   if (++n == lst.length)
+                       resolve(true);
                 }
         }
         catch(e) {
