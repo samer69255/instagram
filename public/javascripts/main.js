@@ -24,7 +24,7 @@ $('#f1').submit(function(e) {
             alert('الرجاء اختيار ملف نصي');
             return;
         }
-        start();
+        //start();
     });
 }
 })();
@@ -41,7 +41,7 @@ $('#f1').submit(function(e) {
         if (data.run === true) {
             $('#main').hide();
             $('#stat').show();
-            start();
+            //start();
         }
     })
 })();

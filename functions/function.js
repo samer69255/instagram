@@ -20,15 +20,22 @@ async function main(ff) {
     stat.run = true;
     stat.text = 'Downloading Images ...';
     await downloadP();
-    console.log('proccess run');
+    console.log('Download comple !');
+    console.log('Proccess Runing');
     stat.text = 'proccess run';
     var insx = fs.readFileSync(ff, 'UTF-8').split('\n');
     stat.color = 'spinner-grow text-primary';
+    console.log('run for loop');
     for (var i=0; i<insx.length; i++) {
-        
+            // start loop
             stat.text = `Loging to ${insx[i]}`;
+        
+            console.log('===============================');
+            console.log('Logining '+i);
             var client = await login(insx[i], "Samer@88");
-            console.log('Logined');
+            console.log('Logined ' +i);
+            console.log('==============================');
+        
             stat.text = `Logined to ${insx[i]}`;
             if (client === 'err1') {
                 console.log(`Error Code 1 ${++s.err1}`);
@@ -41,7 +48,9 @@ async function main(ff) {
                 continue;
             }
        
+         console.log('proccess '+i);
          var p =  await proc(client, imageList[i]);
+        console.log('end proccess'+i);
         if (p === null) {
             console.log(`Error Code 3 ${++s.err3}`);
             stat.err3.push(insx[i]);
@@ -63,7 +72,7 @@ async function main(ff) {
 function login(user, pass) {
     return new Promise(async resolve => {
         
-        console.log('login ...');
+        //console.log('login ...');
         if (user.indexOf('@') > -1)
         user = user.match(/(.*?)@.*/)[1];
         var cookie = new FileCookieStore('./public/cookies/'+user+'.json');
@@ -89,7 +98,12 @@ function login(user, pass) {
     });
 }
 //(async function() {
-//   var a =await login("samawisamer", "Samer@991"); 
+//    console.log('loging 1 ...');
+//    var a1 =await login("samawisamer", "Samer@991"); 
+//    console.log('logined 1');
+//    console.log('logining 2');
+//    var a2 =await login("samawisamer", "Samer@991"); 
+//    console.log('logined 2');
 //    //await a.follow({userId : '2'});
 //    console.log(  a);
 //})();
@@ -144,41 +158,38 @@ function proc(usr, name) {
 
 function downloadP() {
     return new Promise(async resolve => {
-            var list1 = await search('صور انيقة');
-            var list2 = await search('صور انستغرام');
-            var list3 = await search('صور شخصية راقية');
-            var list = list1.concat(list2).concat(list3);
-            delete list1,list2,list3;
+        var list1 = await search('صور انيقة');
+        var list2 = await search('صور انستغرام');
+        var list3 = await search('صور شخصية راقية');
+        var list = list1.concat(list2).concat(list3);
+        delete list1,list2,list3;
         var download = function(uri, filename, fn){
-                 request.head(uri, function(err, res, body){
-                    if (err) {
-                        console.log(err);
-                        fn();
-                        return; 
-                    }
-    //console.log('content-type:', res.headers['content-type']);
-    //console.log('content-length:', res.headers['content-length']);
-    if (res.headers['content-length'] === undefined)
-        {
-            fn();
-            return;
-        }
-        imageList.push(filename);      
-        request(uri).pipe(fs.createWriteStream(filename)).on('close', fn);
-  });
-           
-};
+            request.head(uri, function(err, res, body){
+                if (err) {
+                    console.log(err);
+                    fn();
+                    return; 
+                }
+                //console.log('content-type:', res.headers['content-type']);
+                //console.log('content-length:', res.headers['content-length']);
+                if (res.headers['content-length'] === undefined) {
+                    fn();
+                    return; 
+                }
+                imageList.push(filename);      
+                request(uri).pipe(fs.createWriteStream(filename)).on('close', fn);
+            });
+        };
         
         console.log('downloading Images ...');
         var n = 0;
         for (var ii=0; ii<list.length; ii++)
             {
-            //console.log(ii);
-            download(decodeURI(list[ii].url), './photos/ph_'+ii+'.jpg', () => {
+                //console.log(ii);
+                download((list[ii].url), `./photos/ph_${ii}.jpg`, () => {
                 stat.text = ( ++n ).toString();
                 //console.log('ccc');
                 if (n == list.length) {
-                    console.log('dowloand comple');
                     stat.text = 'Download Comple';
                     resolve();
                 }
