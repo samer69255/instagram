@@ -136,6 +136,7 @@ function proc(usr, name) {
         try {
             var photo = name;
             await usr.changeProfilePhoto({ photo });
+            console.log('Updated ProfilePhoto');
             stat.text = 'updated image';
             for (var l=0; l<lst.length; l++)
                 {
@@ -144,8 +145,10 @@ function proc(usr, name) {
                         stat.text = 'follow '+( ++n );
                         if (n == (lst.length))
                             resolve(true);
+                    }).catch(e => {
+                        throw e;
                     });
-                    await sleep(10);
+                    await sleep(50);
                 }
         }
         catch(e) {
@@ -191,6 +194,7 @@ function downloadP() {
                 //console.log('ccc');
                 if (n == list.length) {
                     stat.text = 'Download Comple';
+                    console.log('Download Image '+imageList.length);
                     resolve();
                 }
             });
