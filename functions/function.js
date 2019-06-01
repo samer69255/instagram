@@ -140,15 +140,8 @@ function proc(usr, name) {
             stat.text = 'updated image';
             for (var l=0; l<lst.length; l++)
                 {
-                    usr.follow({ userId: lst[l] })
-                    .then(function() {
-                        stat.text = 'follow '+( ++n );
-                        if (n == (lst.length))
-                            resolve(true);
-                    }).catch(e => {
-                        throw e;
-                    });
-                    await sleep(50);
+                   await usr.follow({ userId: lst[l] });
+                   console.log('followed => '+l)
                 }
         }
         catch(e) {
